@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CircuitTrainer</string>
+    <string name="welcome">Welcome to Circuit Trainer!</string>
+    <string name="new_button_text">New</string>
+    <string name="saved_button_text">Saved</string>
 </resources>
