@@ -3,4 +3,14 @@
     <string name="welcome">Welcome to Circuit Trainer!</string>
     <string name="new_button_text">New</string>
     <string name="saved_button_text">Saved</string>
+    <string name="save_button_text">Save</string>
+    <string name="start_button_text">Start</string>
+    <string-array name="circuit_builder_items">
+        <item>Name</item>
+        <item>Warmup</item>
+        <item>Repetition</item>
+        <item>Cooldown</item>
+        <item>Sets</item>
+        <item>Warnings every...</item>
+    </string-array>
 </resources>
