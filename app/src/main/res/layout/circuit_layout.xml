@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/add_warning"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="353dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="149dp"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/sub_warning"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="234dp"
+        android:layout_marginBottom="151dp"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/add_set"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="155dp"
+        android:layout_marginBottom="151dp"
+        android:text="+" />
+
+    <ListView
+        android:id="@+id/exercise_list"
+        android:layout_width="match_parent"
+        android:layout_height="322dp" />
+
+    <Button
+        android:id="@+id/add_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="326dp"
+        android:layout_toStartOf="@+id/add_rest"
+        android:text="+ exercise" />
+
+    <Button
+        android:id="@+id/add_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="325dp"
+        android:text="+ Rest" />
+
+    <TextView
+        android:id="@+id/sets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="98dp"
+        android:layout_marginBottom="209dp"
+        android:text="Sets" />
+
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="208dp"
+        android:text="Warning (sec)" />
+
+    <TextView
+        android:id="@+id/num_sets"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="91dp"
+        android:layout_marginBottom="147dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/num_warning"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="141dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/sub_set"
+        android:layout_width="45dp"
+        android:layout_height="38dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="150dp"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="44dp"
+        android:text="@string/save_button_text" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="83dp"
+        android:layout_marginBottom="42dp"
+        android:text="@string/start_button_text" />
+
+</RelativeLayout>

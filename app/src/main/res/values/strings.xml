@@ -8,7 +8,7 @@
     <string-array name="circuit_builder_items">
         <item>Name</item>
         <item>Warmup</item>
-        <item>Repetition</item>
+        <item>Exercises</item>
         <item>Cooldown</item>
         <item>Sets</item>
         <item>Warnings every...</item>
