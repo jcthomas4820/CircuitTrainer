@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  open ExerciseActivity
+                //  open CircuitActivity
                 startActivity(new Intent(WelcomeActivity.this, CircuitActivity.class));
                 finish();
             }

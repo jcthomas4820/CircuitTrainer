@@ -8,6 +8,7 @@ public class Rest extends IntervalUnit{
     Rest(int _time){
         time = _time;
         color = "green";
+        name = "Rest";
     }
 
 
