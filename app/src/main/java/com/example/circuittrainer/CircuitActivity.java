@@ -37,8 +37,8 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
     int sets;
     int warning;
 
-    //ArrayList<IntervalUnit> intervalQueue;          //  queue of the user's entered circuit
-
+    ArrayList<String> namesQueue;                //  queue will contain user entered circuit exercises
+    ArrayList<Integer> timeQueue;                   //  queue will contain user entered circuit times
     ArrayList<String> listItems;                    //  list items in exerciseList
     ArrayAdapter<String> adapter;                   //  array adapter to put items in exerciseList
 
@@ -48,6 +48,8 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
         setContentView(R.layout.circuit_layout);
 
         //  get references to UI elements
+        namesQueue = new ArrayList<>();
+        timeQueue = new ArrayList<>();
         exerciseList = (ListView) findViewById(R.id.exercise_list);
         add_exercise = (Button) findViewById(R.id.add_exercise);
         add_rest = (Button) findViewById(R.id.add_rest);
@@ -137,7 +139,9 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
                 Intent i = new Intent(CircuitActivity.this, TimerActivity.class);
 
                 //  fill intent with exercise list, sets, and warning
-                i.putExtra("intervalQueue", intervalQueue);
+                i.putExtra("namesQueue", namesQueue);
+                i.putExtra("timeQueue", timeQueue);
+                i.putExtra("circuitList", listItems);
                 i.putExtra("sets", sets);
                 i.putExtra("warning", warning);
 
@@ -158,6 +162,7 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
     public void getDialogInfo(IntervalUnit unit) {
         //  will receive the interval unit that user creates
         adapter.add(unit.getStringDisplay());                   //  add it to the exercise ListView
-        //intervalQueue.add(unit);                                //  add to the queue
+        namesQueue.add(unit.name);                                //  add to both queues
+        timeQueue.add(unit.time);
     }
 }

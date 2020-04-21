@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 public class TimerActivity extends AppCompatActivity {
 
-    ArrayList<IntervalUnit> intervalQueue;
+    ArrayList<String> namesQueue;                //  queue will contain user entered circuit exercises
+    ArrayList<Integer> timesQueue;                   //  queue will contain user entered circuit times
     int sets;
     int warning;
 
@@ -21,7 +24,9 @@ public class TimerActivity extends AppCompatActivity {
         Intent i = getIntent();
         sets = i.getIntExtra("sets", 1);
         warning = i.getIntExtra("warning", 0);
-        intervalQueue = (ArrayList<IntervalUnit>) i.getParcelableArrayListExtra("intervalQueue");
+        namesQueue = i.getStringArrayListExtra("namesQueue");
+        timesQueue = i.getIntegerArrayListExtra("timeQueue");
 
+        int x=1;
     }
 }
