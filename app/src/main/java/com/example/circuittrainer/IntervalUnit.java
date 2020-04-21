@@ -4,6 +4,11 @@
 
 package com.example.circuittrainer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 public class IntervalUnit {
 
     String name;
@@ -18,5 +23,6 @@ public class IntervalUnit {
     String getStringDisplay(){
         return name+": "+time+"sec";
     }
+
 
 }

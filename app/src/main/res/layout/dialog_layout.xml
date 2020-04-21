@@ -4,13 +4,13 @@
     android:padding="20dp">
 
     <EditText
-        android:hint="Exercise Name"
-        android:id="@+id/exercise_name"
+        android:hint="Name"
+        android:id="@+id/_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/rest_time"
+        android:id="@+id/_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

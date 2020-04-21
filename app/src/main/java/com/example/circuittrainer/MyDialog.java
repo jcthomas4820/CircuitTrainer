@@ -15,24 +15,30 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class ExerciseDialog extends AppCompatDialogFragment {
+public class MyDialog extends AppCompatDialogFragment {
 
-    public interface ExerciseDialogListener{
-        void getExerciseInfo(String exerciseName, int time);
+    public interface DialogListener{
+        void getDialogInfo(IntervalUnit unit);
     }
 
-    private EditText exercise_name;
-    private EditText rest_time;
-    private ExerciseDialogListener listener;
+
+    private EditText _name;
+    private EditText _time;
+    private DialogListener listener;
+    String type;                            //  whether we're creating a rest or exercise dialog
+
+    MyDialog(String _type){
+        type = _type;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
         try {
-            listener = (ExerciseDialogListener) context;            //  assign listener once attached
+            listener = (DialogListener) context;            //  assign listener once attached
         } catch (ClassCastException e) {                                     //  ensure activity implements the interface
-            Log.e("ExerciseDialog", "Activity does not implement ExerciseDialogListener!");
+            Log.e("MyDialog", "Activity does not implement DialogListener!");
         }
     }
 
@@ -41,10 +47,10 @@ public class ExerciseDialog extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());       //  builder to build the alert dialog box
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View v = inflater.inflate(R.layout.exercise_dialog, null);
+        View v = inflater.inflate(R.layout.dialog_layout, null);
 
         builder.setView(v)
-                .setTitle("Exercise")
+                .setTitle(type)
                 .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -55,16 +61,27 @@ public class ExerciseDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //  pull the text, pass to the activity
-                        String exercise = exercise_name.getText().toString();
-                        int time = Integer.parseInt(rest_time.getText().toString());
-
-                        listener.getExerciseInfo(exercise, time);
+                        int time = Integer.parseInt(_time.getText().toString());
+                        if (type.equals("Exercise")) {
+                            String name = _name.getText().toString();
+                            listener.getDialogInfo(new Exercise(name, time));
+                        }
+                        else{
+                            listener.getDialogInfo(new Rest(time));
+                        }
                     }
                 });
 
+
         //  initialize the edit texts in the dialog box
-        exercise_name = (EditText) v.findViewById(R.id.exercise_name);
-        rest_time = (EditText) v.findViewById(R.id.rest_time);
+        _name = (EditText) v.findViewById(R.id._name);
+        _time = (EditText) v.findViewById(R.id._time);
+
+        //  if entering a rest unit, set the name to be "Rest" and not editable
+        if (type.equals("Rest")){
+            _name.setText("Rest");
+            _name.setFocusable(false);
+        }
 
         return builder.create();            //  return the dialog box
     }
