@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-public class CircuitActivity extends AppCompatActivity {
+public class CircuitActivity extends AppCompatActivity implements ExerciseDialog.ExerciseDialogListener {
 
     ListView exerciseList;
     Button add_exercise;
@@ -82,7 +82,7 @@ public class CircuitActivity extends AppCompatActivity {
             }
         });
 
-        //  increment set count
+        //  increment warning count
         add_warning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class CircuitActivity extends AppCompatActivity {
             }
         });
 
-        //  increment set count
+        //  decrement warning count
         sub_warning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,13 +103,41 @@ public class CircuitActivity extends AppCompatActivity {
             }
         });
 
+        //  open the dialog box for adding an exercise
+        add_exercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openExerciseDialog();
+            }
+        });
 
+        //  open the dialog box for adding a rest interval
+        add_rest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRestDialog();
+            }
+        });
 
+    }
+
+    //  open the exercise dialog for user to add an exercise
+    public void openExerciseDialog(){
+        ExerciseDialog exDialog = new ExerciseDialog();
+        exDialog.show(getSupportFragmentManager(), "exercise dialog");
+    }
+
+    //  open the rest dialog for user to add a rest interval
+    public void openRestDialog(){
 
     }
 
 
+    @Override
+    public void getExerciseInfo(String exerciseName, int time) {
+        //  will receive the exerciseName and time from fragment, which is exercise dialog box
+        Log.i("Main Activity", "EXERCISE: " + exerciseName);
+        Log.i("Main Activity", "REST: " + time);
 
-
-
+    }
 }
