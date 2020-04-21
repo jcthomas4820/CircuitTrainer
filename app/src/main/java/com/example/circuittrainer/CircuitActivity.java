@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CircuitActivity extends AppCompatActivity implements ExerciseDialog.ExerciseDialogListener {
@@ -35,6 +36,9 @@ public class CircuitActivity extends AppCompatActivity implements ExerciseDialog
     int sets;
     int warning;
 
+    ArrayList<IntervalUnit> intervalQueue;          //  queue of the user's entered circuit
+    ArrayList<String> listItems;                    //  list items in exerciseList
+    ArrayAdapter<String> adapter;                   //  array adapter to put items in exerciseList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,11 @@ public class CircuitActivity extends AppCompatActivity implements ExerciseDialog
         start_button = (Button) findViewById(R.id.start_button);
         num_sets = (TextView) findViewById(R.id.num_sets);
         num_warning = (TextView) findViewById(R.id.num_warning);
+
+        intervalQueue = new ArrayList<IntervalUnit>();
+        listItems = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this, R.layout.interval_listitem_layout, listItems);
+        exerciseList.setAdapter(adapter);
 
         //  set initial values for sets and warnings
         sets = 1;
@@ -74,7 +83,7 @@ public class CircuitActivity extends AppCompatActivity implements ExerciseDialog
         sub_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sets == 0){                 //  avoid negative sets
+                if (sets == 1){                 //  avoid <=0 sets
                     return;
                 }
                 sets = sets-1;
@@ -136,8 +145,12 @@ public class CircuitActivity extends AppCompatActivity implements ExerciseDialog
     @Override
     public void getExerciseInfo(String exerciseName, int time) {
         //  will receive the exerciseName and time from fragment, which is exercise dialog box
-        Log.i("Main Activity", "EXERCISE: " + exerciseName);
-        Log.i("Main Activity", "REST: " + time);
 
+        //Log.i("Main Activity", "EXERCISE: " + exerciseName);
+        //Log.i("Main Activity", "REST: " + time);
+
+        Exercise exercise = new Exercise(exerciseName, time);       //  create new exercise interval unit
+        adapter.add(exercise.getStringDisplay());                   //  add it to the exercise ListView
+        intervalQueue.add(exercise);                                //  add to the queue
     }
 }

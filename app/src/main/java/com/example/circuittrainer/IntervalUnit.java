@@ -10,9 +10,13 @@ public class IntervalUnit {
     String color;
     int time;
 
+    //  fill the screen with color
     void fillColor(){
 
-        //  fill the screen with color
+    }
+
+    String getStringDisplay(){
+        return name+": "+time+"sec";
     }
 
 }
