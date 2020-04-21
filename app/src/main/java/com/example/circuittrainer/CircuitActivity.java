@@ -61,6 +61,51 @@ public class CircuitActivity extends AppCompatActivity {
         num_warning.setText(""+warning);
 
 
+        //  increment set count
+        add_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sets = sets+1;
+                num_sets.setText(""+sets);
+            }
+        });
+
+        //  decrement set count
+        sub_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sets == 0){                 //  avoid negative sets
+                    return;
+                }
+                sets = sets-1;
+                num_sets.setText(""+sets);
+            }
+        });
+
+        //  increment set count
+        add_warning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                warning = warning+1;
+                num_warning.setText(""+warning);
+            }
+        });
+
+        //  increment set count
+        sub_warning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (warning == 0){                 //  avoid negative warning
+                    return;
+                }
+                warning = warning-1;
+                num_warning.setText(""+warning);
+            }
+        });
+
+
+
+
     }
 
 
