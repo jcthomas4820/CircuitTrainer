@@ -48,8 +48,15 @@ public class TimerActivity extends AppCompatActivity {
         Intent i = getIntent();
         sets = i.getIntExtra("sets", 1);
         warning = i.getIntExtra("warning", 0);
-        namesQueue = i.getStringArrayListExtra("namesQueue");
-        timesQueue = i.getIntegerArrayListExtra("timeQueue");
+        namesQueue_orig = i.getStringArrayListExtra("namesQueue");
+        timesQueue_orig = i.getIntegerArrayListExtra("timeQueue");
+
+
+        //  make copies of each queue
+        namesQueue = new ArrayList<>();
+        timesQueue = new ArrayList<>();
+        makeCopy();
+
         currSet = 1;
 
 
@@ -62,7 +69,7 @@ public class TimerActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, R.layout.interval_listitem_layout, namesQueue);
         timerList.setAdapter(adapter);
 
-        numSetsText.setText("Set: " + currSet + "/" + sets);           //  display 1/sets
+        numSetsText.setText("Set: " + currSet + "/" + sets);           //  display currSet/sets
 
         //  will either pause or play the timer
         pause_play_button.setOnClickListener(new View.OnClickListener() {
@@ -140,10 +147,22 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 //  if queue is empty
                 if (namesQueue.isEmpty()) {
-                    //  speech to say done, beep
 
-                    //  set exercise text to be done!
-                    current_exercise_text.setText("DONE!");
+                    //  update number of current set
+                    currSet++;
+
+                    //  circuit is over, all sets complete
+                    if(currSet > sets){
+                        //  speech to say done, beep
+
+                        //  set exercise text to be done!
+                        current_exercise_text.setText("DONE!");
+                    }
+                    else{
+                        makeCopy();
+                        numSetsText.setText("Set: " + currSet + "/" + sets);           //  display currSet/sets
+                        beginNextExercise();                                    //  start brand new set
+                    }
                 }
                 else {
                     beginNextExercise();
