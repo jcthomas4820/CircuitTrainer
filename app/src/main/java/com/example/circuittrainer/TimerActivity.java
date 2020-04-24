@@ -1,9 +1,12 @@
 //  https://www.youtube.com/watch?v=zmjfAcnosS0&t=107s
+//  https://stackoverflow.com/questions/29509010/how-to-play-a-short-beep-to-android-phones-loudspeaker-programmatically
 
 package com.example.circuittrainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -38,6 +41,8 @@ public class TimerActivity extends AppCompatActivity {
     long timeLeft = 10000;                                  //  time left in ms
     boolean running;
 
+    ToneGenerator toneGen;                     //  used to play beep
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class TimerActivity extends AppCompatActivity {
         makeCopy();
 
         currSet = 1;
+        toneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 1000);                //  set up beep generator
 
 
         timerList = (ListView) findViewById(R.id.timer_list);
@@ -112,11 +118,17 @@ public class TimerActivity extends AppCompatActivity {
     }
 
 
+    //  function called every time timer stops i.e. exercise is over
+        //  used to play name of exercise, then beep
+    void playSpeech(){
+        //  speech to say exercise name, beep
+
+        toneGen.startTone(ToneGenerator.TONE_CDMA_PIP,1000);
+    }
+
 
     //  will start the next exercise from the queue
     void beginNextExercise(){
-
-        //  speech to say exercise name, beep
 
         //  get next element in names queue and remove
         String currEx = namesQueue.get(0);
@@ -127,6 +139,8 @@ public class TimerActivity extends AppCompatActivity {
         //  get next element in times queue and remove, set time
         timeLeft = (long) timesQueue.get(0) * 1000;
         timesQueue.remove(0);
+
+        playSpeech();
 
         playTimer();
     }
@@ -153,7 +167,7 @@ public class TimerActivity extends AppCompatActivity {
 
                     //  circuit is over, all sets complete
                     if(currSet > sets){
-                        //  speech to say done, beep
+                        playSpeech();
 
                         //  set exercise text to be done!
                         current_exercise_text.setText("DONE!");
