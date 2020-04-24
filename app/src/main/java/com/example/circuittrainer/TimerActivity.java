@@ -22,9 +22,12 @@ public class TimerActivity extends AppCompatActivity {
 
     ArrayList<String> namesQueue;                //  queue will contain user entered circuit exercises
     ArrayList<Integer> timesQueue;                   //  queue will contain user entered circuit times
+    ArrayList<String> namesQueue_orig;           // original version of namesQueue
+    ArrayList<Integer> timesQueue_orig;          //  original version of timesQueue
     ArrayAdapter<String> adapter;               //  will place namesQueue inside list view
     ListView timerList;                         //  contains names of exercises/rest
     TextView numSetsText;                       //  displays the number of sets
+    TextView current_exercise_text;             //  displays the current exercise on timer
     int sets;
     int warning;
     int currSet;                                //  set user is currently on
@@ -32,7 +35,7 @@ public class TimerActivity extends AppCompatActivity {
     Button pause_play_button;
 
     CountDownTimer timer;
-    long timeLeft = 600000;                                  //  time left in ms
+    long timeLeft = 10000;                                  //  time left in ms
     boolean running;
 
 
@@ -54,11 +57,12 @@ public class TimerActivity extends AppCompatActivity {
         numSetsText = (TextView) findViewById(R.id.set_text);
         timer_text = (TextView) findViewById(R.id.timer_display);
         pause_play_button = (Button) findViewById(R.id.pause_button);
+        current_exercise_text = (TextView) findViewById(R.id.current_exercise);
 
         adapter = new ArrayAdapter<String>(this, R.layout.interval_listitem_layout, namesQueue);
         timerList.setAdapter(adapter);
 
-        numSetsText.setText("Sets: " + currSet + "/" + sets);           //  display 1/sets
+        numSetsText.setText("Set: " + currSet + "/" + sets);           //  display 1/sets
 
         //  will either pause or play the timer
         pause_play_button.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +86,45 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+
+
+    //  makes copy of original namesQueue and timesQueue to the list in the List View
+    void makeCopy(){
+
+        //  make copy of namesQueue_orig
+        for (String name : namesQueue_orig){
+            namesQueue.add(name);
+        }
+
+        //  make copy of timesQueue_orig
+        for (int time : timesQueue_orig){
+            timesQueue.add(time);
+        }
+
+        return;
+    }
+
+
+
+    //  will start the next exercise from the queue
+    void beginNextExercise(){
+
+        //  speech to say exercise name, beep
+
+        //  get next element in names queue and remove
+        String currEx = namesQueue.get(0);
+        namesQueue.remove(0);
+        adapter.notifyDataSetChanged();
+        //  set the exercise text
+        current_exercise_text.setText(currEx);
+        //  get next element in times queue and remove, set time
+        timeLeft = (long) timesQueue.get(0) * 1000;
+        timesQueue.remove(0);
+
+        playTimer();
+    }
+
+
     void playTimer(){
 
         //  assign new CountDownTimer
@@ -93,8 +136,18 @@ public class TimerActivity extends AppCompatActivity {
             }
 
             @Override
+            //  once timer is finished, set up the next exercise item
             public void onFinish() {
+                //  if queue is empty
+                if (namesQueue.isEmpty()) {
+                    //  speech to say done, beep
 
+                    //  set exercise text to be done!
+                    current_exercise_text.setText("DONE!");
+                }
+                else {
+                    beginNextExercise();
+                }
             }
         }.start();
 
