@@ -1,5 +1,6 @@
 //  https://www.youtube.com/watch?v=zmjfAcnosS0&t=107s
 //  https://stackoverflow.com/questions/29509010/how-to-play-a-short-beep-to-android-phones-loudspeaker-programmatically
+//  https://www.youtube.com/watch?v=DoYnz0GYN1w
 
 package com.example.circuittrainer;
 
@@ -11,6 +12,8 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class TimerActivity extends AppCompatActivity {
     boolean running;
 
     ToneGenerator toneGen;                     //  used to play beep
-
+    TextToSpeech ttS;                           //  for speaking warning
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,21 @@ public class TimerActivity extends AppCompatActivity {
 
         currSet = 1;
         toneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 1000);                //  set up beep generator
+        ttS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS){
+                    int result = ttS.setLanguage(Locale.US);
 
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("ttS", "Error with Speech. Language not supported?");
+                    }
+                }
+                else{
+                    Log.e("ttS", "Error with Speech. Initialization failure");
+                }
+            }
+        });
 
         timerList = (ListView) findViewById(R.id.timer_list);
         numSetsText = (TextView) findViewById(R.id.set_text);
@@ -146,6 +164,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
 
+    //  will alert user when 10 seconds are left
+    void playVoice(String speakText){
+
+        ttS.speak(speakText, TextToSpeech.QUEUE_FLUSH, null, null);
+
+    }
+
+
     void playTimer(){
 
         //  assign new CountDownTimer
@@ -201,6 +227,11 @@ public class TimerActivity extends AppCompatActivity {
         int min = (int) timeLeft/60000;
         int sec = (int) timeLeft % 60000 / 1000;
 
+        //  say 10 second warning if 10 sec left
+        if (sec == 10) {
+            playVoice("ten");
+        }
+
         //  build string to display
         String timeString;
 
@@ -215,6 +246,20 @@ public class TimerActivity extends AppCompatActivity {
 
         timer_text.setText(timeString);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        //  get rid of TextToSpeech
+        if (ttS != null){
+            ttS.stop();
+            ttS.shutdown();
+        }
+
+        timer.cancel();         //  end the timer
+
+        super.onDestroy();
     }
 
 }
