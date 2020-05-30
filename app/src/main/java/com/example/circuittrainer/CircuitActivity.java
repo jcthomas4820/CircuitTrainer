@@ -159,10 +159,10 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
 
 
     @Override
-    public void getDialogInfo(IntervalUnit unit) {
+    public void getDialogInfo(String name, int time) {
         //  will receive the interval unit that user creates
-        adapter.add(unit.getStringDisplay());                   //  add it to the exercise ListView
-        namesQueue.add(unit.name);                                //  add to both queues
-        timeQueue.add(unit.time);
+        adapter.add(name + ":   " + time);                   //  add it to the exercise ListView
+        namesQueue.add(name);                                //  add to both queues
+        timeQueue.add(time);
     }
 }

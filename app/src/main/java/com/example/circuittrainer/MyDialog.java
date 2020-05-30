@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class MyDialog extends AppCompatDialogFragment {
 
     public interface DialogListener{
-        void getDialogInfo(IntervalUnit unit);
+        void getDialogInfo(String name, int time);
     }
 
 
@@ -64,10 +64,10 @@ public class MyDialog extends AppCompatDialogFragment {
                         int time = Integer.parseInt(_time.getText().toString());
                         if (type.equals("Exercise")) {
                             String name = _name.getText().toString();
-                            listener.getDialogInfo(new Exercise(name, time));
+                            listener.getDialogInfo(name, time);
                         }
                         else{
-                            listener.getDialogInfo(new Rest(time));
+                            listener.getDialogInfo("Rest", time);
                         }
                     }
                 });
