@@ -120,6 +120,19 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
             }
         });
 
+        //  user edits a list item
+        exerciseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //  get name and time of the item to edit
+                String sName = namesQueue.get(position);
+                int sTime = timeQueue.get(position);
+
+                //  populate a dialog box with sName and sTime, in order to edit
+                editDialog(sName, sTime);
+            }
+        });
+
     }
 
     //  open the exercise dialog for user to add an exercise
@@ -128,6 +141,11 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
         dialog.show(getSupportFragmentManager(), "Dialog");
     }
 
+    //  open a dialog box of a current interval unit
+    public void editDialog(String name, int time){
+        MyDialog dialog = new MyDialog(name, time);
+        dialog.show(getSupportFragmentManager(), "Dialog");
+    }
 
     @Override
     public void getDialogInfo(String name, int time) {
@@ -136,4 +154,6 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
         namesQueue.add(name);                                //  add to both queues
         timeQueue.add(time);
     }
+
+
 }

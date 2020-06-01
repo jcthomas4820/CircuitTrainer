@@ -26,9 +26,14 @@ public class MyDialog extends AppCompatDialogFragment {
     private EditText _time;
     private DialogListener listener;
     String type;                            //  whether we're creating a rest or exercise dialog
+    int sTime = -1;
 
     MyDialog(String _type){
         type = _type;
+    }
+    MyDialog(String _type, int _sTime){
+        type = _type;
+        sTime = _sTime;
     }
 
     @Override
@@ -76,6 +81,12 @@ public class MyDialog extends AppCompatDialogFragment {
         //  initialize the edit texts in the dialog box
         _name = (EditText) v.findViewById(R.id._name);
         _time = (EditText) v.findViewById(R.id._time);
+
+        //  if editing a prior unit, populate _name and _time appropriately
+        if (sTime != -1){
+            _name.setText(type);
+            _time.setText(""+sTime);
+        }
 
         //  if entering a rest unit, set the name to be "Rest" and not editable
         if (type.equals("Rest")){
