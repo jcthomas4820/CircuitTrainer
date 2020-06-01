@@ -51,13 +51,13 @@ public class MyDialog extends AppCompatDialogFragment {
 
         builder.setView(v)
                 .setTitle(type)
-                .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //  nothing will happen if user goes back...
                     }
                 })
-                .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //  pull the text, pass to the activity

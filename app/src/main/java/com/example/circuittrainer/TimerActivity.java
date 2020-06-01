@@ -20,8 +20,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -56,7 +54,6 @@ public class TimerActivity extends AppCompatActivity {
         //  assign the timer's variables
         Intent i = getIntent();
         sets = i.getIntExtra("sets", 1);
-        warning = i.getIntExtra("warning", 0);
         namesQueue_orig = i.getStringArrayListExtra("namesQueue");
         timesQueue_orig = i.getIntegerArrayListExtra("timeQueue");
 

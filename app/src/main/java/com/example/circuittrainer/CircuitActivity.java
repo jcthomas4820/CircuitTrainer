@@ -33,9 +33,7 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
     Button save_button;
     Button start_button;
     TextView num_sets;
-    TextView num_warning;
     int sets;
-    int warning;
 
     ArrayList<String> namesQueue;                //  queue will contain user entered circuit exercises
     ArrayList<Integer> timeQueue;                   //  queue will contain user entered circuit times
@@ -55,12 +53,9 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
         add_rest = (Button) findViewById(R.id.add_rest);
         add_set = (Button) findViewById(R.id.add_set);
         sub_set = (Button) findViewById(R.id.sub_set);
-        add_warning = (Button) findViewById(R.id.add_warning);
-        sub_warning = (Button) findViewById(R.id.sub_warning);
         save_button = (Button) findViewById(R.id.save_button);
         start_button = (Button) findViewById(R.id.start_button);
         num_sets = (TextView) findViewById(R.id.num_sets);
-        num_warning = (TextView) findViewById(R.id.num_warning);
 
         //intervalQueue = new ArrayList<>();
         listItems = new ArrayList<String>();
@@ -69,9 +64,7 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
 
         //  set initial values for sets and warnings
         sets = 1;
-        warning = 0;
         num_sets.setText(""+sets);
-        num_warning.setText(""+warning);
 
 
         //  increment set count
@@ -92,27 +85,6 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
                 }
                 sets = sets-1;
                 num_sets.setText(""+sets);
-            }
-        });
-
-        //  increment warning count
-        add_warning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                warning = warning+1;
-                num_warning.setText(""+warning);
-            }
-        });
-
-        //  decrement warning count
-        sub_warning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (warning == 0){                 //  avoid negative warning
-                    return;
-                }
-                warning = warning-1;
-                num_warning.setText(""+warning);
             }
         });
 
@@ -143,7 +115,6 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
                 i.putExtra("timeQueue", timeQueue);
                 i.putExtra("circuitList", listItems);
                 i.putExtra("sets", sets);
-                i.putExtra("warning", warning);
 
                 startActivity(i);
             }
@@ -161,7 +132,7 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
     @Override
     public void getDialogInfo(String name, int time) {
         //  will receive the interval unit that user creates
-        adapter.add(name + ":   " + time);                   //  add it to the exercise ListView
+        adapter.add(name + ":   " + time + " sec");                   //  add it to the exercise ListView
         namesQueue.add(name);                                //  add to both queues
         timeQueue.add(time);
     }
