@@ -19,6 +19,8 @@ public class MyDialog extends AppCompatDialogFragment {
 
     public interface DialogListener{
         void getDialogInfo(String name, int time);
+        void deleteExercise(int position);
+        void editExercise(int position, String name, int time);
     }
 
 
@@ -27,13 +29,17 @@ public class MyDialog extends AppCompatDialogFragment {
     private DialogListener listener;
     String type;                            //  whether we're creating a rest or exercise dialog
     int sTime = -1;
+    boolean edit;
+    int position = -1;
 
     MyDialog(String _type){
         type = _type;
     }
-    MyDialog(String _type, int _sTime){
+    MyDialog(String _type, int _sTime, int _position){
         type = _type;
         sTime = _sTime;
+        edit = true;
+        position = _position;
     }
 
     @Override
@@ -59,7 +65,10 @@ public class MyDialog extends AppCompatDialogFragment {
                 .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //  nothing will happen if user goes back...
+                        //  if this entry currently exists, delete it
+                        if (edit){
+                            listener.deleteExercise(position);
+                        }
                     }
                 })
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
@@ -67,12 +76,13 @@ public class MyDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //  pull the text, pass to the activity
                         int time = Integer.parseInt(_time.getText().toString());
-                        if (type.equals("Exercise")) {
-                            String name = _name.getText().toString();
-                            listener.getDialogInfo(name, time);
+                        String name = _name.getText().toString();
+
+                        if (edit){
+                            listener.editExercise(position, name, time);
                         }
-                        else{
-                            listener.getDialogInfo("Rest", time);
+                        else {
+                            listener.getDialogInfo(name, time);
                         }
                     }
                 });

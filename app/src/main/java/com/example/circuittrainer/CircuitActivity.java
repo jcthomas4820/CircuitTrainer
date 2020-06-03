@@ -129,7 +129,7 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
                 int sTime = timeQueue.get(position);
 
                 //  populate a dialog box with sName and sTime, in order to edit
-                editDialog(sName, sTime);
+                editDialog(sName, sTime, position);
             }
         });
 
@@ -142,17 +142,46 @@ public class CircuitActivity extends AppCompatActivity implements MyDialog.Dialo
     }
 
     //  open a dialog box of a current interval unit
-    public void editDialog(String name, int time){
-        MyDialog dialog = new MyDialog(name, time);
+    public void editDialog(String name, int time, int position){
+        MyDialog dialog = new MyDialog(name, time, position);
         dialog.show(getSupportFragmentManager(), "Dialog");
+    }
+
+    public String getStringDisplay(String name, int time){
+        return name + ":   " + time + " sec";
     }
 
     @Override
     public void getDialogInfo(String name, int time) {
         //  will receive the interval unit that user creates
-        adapter.add(name + ":   " + time + " sec");                   //  add it to the exercise ListView
+        adapter.add(getStringDisplay(name, time));                   //  add it to the exercise ListView
         namesQueue.add(name);                                //  add to both queues
         timeQueue.add(time);
+    }
+
+    @Override
+    public void deleteExercise(int position) {
+        //  remove list item from both queues
+        namesQueue.remove(position);
+        timeQueue.remove(position);
+
+        //  remove list item from listItemas
+        listItems.remove(position);
+        //  notify adapter to display updated list items
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void editExercise(int position, String name, int time) {
+        //  edit entries in both queues
+        namesQueue.set(position, name);
+        timeQueue.set(position, time);
+
+        //  edit entry in list items
+        listItems.set(position, getStringDisplay(name, time));
+        //  notify adapter of this change
+        adapter.notifyDataSetChanged();
+
     }
 
 
