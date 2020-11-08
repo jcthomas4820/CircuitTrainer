@@ -1,6 +1,6 @@
 # Circuit Trainer
 
-It can be difficult to keep up with your physical health while being stuck at home during the coronavirus pandmeic. 
+It can be difficult to keep up with your physical health while being stuck at home during the coronavirus pandemic. 
 Possibly the best way to keep the same intensity as you would in a normal gym session is to implement circuit training.
 
 Circuit Trainer allows you to build a circuit workout to keep you in shape during this quarantine period. 
